@@ -114,7 +114,8 @@ function defineDojoConfig() {
       ['react-dom', 'lib/react/react-dom'],
       ['redux', 'lib/redux/index'],
       ['react-redux', 'lib/react-redux/index'],
-      ['react-bootstrap', 'lib/react-bootstrap/react-bootstrap']
+      ['react-bootstrap', 'lib/react-bootstrap/react-bootstrap'],
+      ['maptiks', '//cdn.maptiks.com/esri3/mapWrapper.js']
     ]
   };
 }

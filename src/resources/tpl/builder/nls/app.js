@@ -14,7 +14,8 @@ define({
       headerConfig: {
         toggles: {
           bookmarks: "Bookmarks",
-          logoSharing: "Logo & Sharing"
+          logoSharing: "Logo & Sharing",
+          maptiks: "Maptiks"
         },
         bookmarks: {
           title: "Section",

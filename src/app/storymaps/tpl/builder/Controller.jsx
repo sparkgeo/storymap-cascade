@@ -82,6 +82,8 @@ export default class ControllerBuilder extends ControllerCore {
     let orgLogo = app.portal.isOrganization && lang.getObject('portal.portalProperties.sharedTheme.logo.small', false, app);
     let useOrgLogo = orgLogo === headerSettings.logo.url;
 
+    let maptiks = app.data.appItem.data.values.settings.maptiks || {};
+    
     let settingsPopupParams = {
       context: {
         headerBackground: '#000'
@@ -97,6 +99,12 @@ export default class ControllerBuilder extends ControllerCore {
             hasOrgLogo: orgLogo ? true : false,
             useOrgLogo: useOrgLogo,
             orgLogo: orgLogo
+          }
+        },
+        {
+          maptiks: {
+            trackcode: maptiks.trackcode,
+            id: maptiks.id
           }
         }
       )
