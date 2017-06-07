@@ -88,10 +88,10 @@ define([
     var sectionIndex = $(response.map.container).parents('.section').index('.section'); // get current section index
     var appSettings = app.data.appItem.data.values.settings;
     if (appSettings.maptiks) {
-      var container = $('.section.active').find('.map');
       require(['maptiks'], function(mapWrapper) {
+        var container = $(response.map.container);
         var maptiksMapOptions = {
-          maptiks_trackcode: appSettings.maptiks.trackcode ,
+          maptiks_trackcode: appSettings.maptiks.trackcode,
           maptiks_id: appSettings.maptiks.id + ':section' + sectionIndex
         };
         mapWrapper(container, maptiksMapOptions, response.map);
