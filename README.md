@@ -14,6 +14,7 @@ The Story Map Cascade℠ app lets you combine narrative text with maps, images, 
 
  * [Introduction](#introduction)
  * [Instructions](#instructions)
+ * [Maptiks integration](#maptiks-integration)
  * [Feedback / support](#feedback--support)
  * [FAQ](#faq)
  * [Configuration](#configuration)
@@ -45,6 +46,44 @@ You can continue to use the builder in ArcGIS Online to modify your story.
 See [customize the look and feel section](#customize-the-look-and-feel) or [developer guide](#developer-guide) if you want to modify the app.
 
 *If you are using Portal for ArcGIS, please follow the instructions at the end of `app/config.js` to configure the application.*
+
+## Maptiks integration
+
+1. Add the Maptiks wrapper as a package alias in `main-config.js`:
+
+    ```
+    window.dojoConfig = {
+        // ...
+        aliases: [
+            // ...
+            ['maptiks', '//cdn.maptiks.com/esri3/mapWrapper.js']
+        ]
+    };
+    ```
+2. Story map applications provide [dojo/topics](https://dojotoolkit.org/reference-guide/1.9/dojo/topic.html) (global events), that we can subscribe to in order to monitor the application life cycle. We have added a custom topic, called "map-loaded" that fires when a web map loads. By listening to these events within `MainView.js`, we ensure that Maptiks monitors each map individually.
+
+    Story map applications also provide helper functions, within the "app" global variable, which stores information about the app, including settings specified by the author within the application builder. Below, we use app variable to access Maptiks parameters entered by the author in the application builder. If the builder UI is unnecessary, these values may be hard-coded in development.
+
+    See the [Developer guide](#developer-guide) for more information about topics and helper functions.
+    
+    Finally, require the Maptiks package and create the mapWrapper object, which will communicate with Maptiks using the trackcode associated with your domain and ID of your choice.
+
+    ```
+    topic.subscribe('map-loaded', function(response) {
+      var sectionIndex = $(response.map.container).parents('.section').index('.section'); // get current section index
+      var appSettings = app.data.appItem.data.values.settings;
+      if (appSettings.maptiks) {
+        require(['maptiks'], function(mapWrapper) {
+          var container = $(response.map.container);
+          var maptiksMapOptions = {
+            maptiks_trackcode: appSettings.maptiks.trackcode, // trackcode entered in builder
+            maptiks_id: appSettings.maptiks.id + ':section' + sectionIndex // ID entered in builder: current section
+          };
+          mapWrapper(container, maptiksMapOptions, response.map);
+        });
+      }
+    });
+    ```
 
 ## Feedback / support
 We would love to hear from you!
