@@ -19,6 +19,7 @@ import QueryTask from 'esri/tasks/QueryTask';
 import esriConfig from 'esri/config';
 import lang from 'dojo/_base/lang';
 import Deferred from 'dojo/Deferred';
+import topic from 'dojo/topic';
 
 import UIUtils from 'storymaps/tpl/utils/UI';
 
@@ -464,6 +465,8 @@ export default class WebMap extends Media {
     arcgisUtils.createMap(this.id, mapElem, options).then(lang.hitch(this, function(response) {
       var map = response.map;
 
+      topic.publish('map-loaded',response);
+      
       this._node
         .removeClass('media-is-loading')
         .find('.media-loading').hide();

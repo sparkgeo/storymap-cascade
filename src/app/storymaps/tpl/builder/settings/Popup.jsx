@@ -3,6 +3,7 @@ import Media from 'storymaps-react/tpl/view/media/Media';
 import viewTpl from 'lib-build/hbars!./Popup';
 import logoSharingTpl from 'lib-build/hbars!./LogoSharing';
 import bookmarkTpl from 'lib-build/hbars!./Bookmark';
+import MaptiksTpl from 'lib-build/hbars!./Maptiks';
 import CommonHelper from 'storymaps/common/utils/CommonHelper';
 
 import i18n from 'lib-build/i18n!resources/tpl/builder/nls/app';
@@ -53,6 +54,7 @@ class SettingsPopup {
       // apply all of the changes
       this.applyBookmarkChanges();
       this.applyLogoSharingChanges();
+      this.applyMaptiksChanges();
 
       this.resolve && this.resolve(this.data.settings);
 
@@ -67,6 +69,12 @@ class SettingsPopup {
     this.container.find('.hc-checkbox.bookmark-checkbox').off('click');
   }
 
+  applyMaptiksChanges() {
+    app.data.appItem.data.values.settings.maptiks = app.data.appItem.data.values.settings.maptiks || {};
+    app.data.appItem.data.values.settings.maptiks.trackcode = $('#maptiks-trackcode').val();
+    app.data.appItem.data.values.settings.maptiks.id = $('#maptiks-id').val();
+  }
+  
   applyBookmarkChanges() {
     // get the values and enabled/disabled.
     // how? Read through each one and apply what you see.
@@ -406,10 +414,17 @@ class SettingsPopup {
         strings: i18n.builder.headerConfig.bookmarks
       };
 
+      let maptiksData = {
+        maptiks_trackcode: this.data.settings.maptiks.trackcode,
+        maptiks_id: this.data.settings.maptiks.id
+      };
+      
       this.container.find('.modal-tab[data-tab="logo-sharing"]').html(logoSharingTpl(logoSharingData));
 
       this.container.find('.modal-tab[data-tab="bookmarks"]').html(bookmarkTpl(bookmarkData));
 
+      this.container.find('.modal-tab[data-tab="maptiks"]').html(MaptiksTpl(maptiksData));
+      
       this.attachBookmarkEvents();
       this.attachLogoSharingEvents();
 
