@@ -15,6 +15,7 @@
 */
 
 define([
+  './Maptiks', // import Maptiks code
   'lib/babel-polyfill/browser-polyfill',
   'lib/jquery/dist/jquery.min',
 
@@ -42,6 +43,7 @@ define([
 
   //'lib/FitText.js/jquery.fittext.js'
 ], function(
+  Maptiks,
   babelPolyfill,
   jQuery,
 
@@ -84,21 +86,6 @@ define([
     update: updateUI
   };
 
-  topic.subscribe('map-loaded', function(response) {
-    var sectionIndex = $(response.map.container).parents('.section').index('.section'); // get current section index
-    var appSettings = app.data.appItem.data.values.settings;
-    if (appSettings.maptiks) {
-      require(['maptiks'], function(mapWrapper) {
-        var container = $(response.map.container);
-        var maptiksMapOptions = {
-          maptiks_trackcode: appSettings.maptiks.trackcode,
-          maptiks_id: appSettings.maptiks.id + ':section' + sectionIndex
-        };
-        mapWrapper(container, maptiksMapOptions, response.map);
-      });
-    }
-  });
-  
   //
   // The section and media factory are accessed through window object as we can't import module dynamically with es6
   //  and Controller that is es6 needs them
