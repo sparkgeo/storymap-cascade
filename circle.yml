@@ -36,7 +36,7 @@ deployment:
     branch: staging
     owner: sparkgeo
     commands:
-      # - find . -name 'index.html' -exec sed -i 's/cdn.maptiks.com/cdn-staging.maptiks.com/g' {} +
+      - find . -name 'main-config.js' -exec sed -i 's/cdn.maptiks.com/cdn-staging.maptiks.com/g' {} +
       - aws s3 sync deploy/ s3://templates-staging.maptiks.com/Cascade/ --delete --quiet
       - >
         curl -X DELETE "https://api.cloudflare.com/client/v4/zones/34e8519f80106c3699e76002b4153ce5/purge_cache"
@@ -47,7 +47,7 @@ deployment:
   dev:
     branch: develop
     commands:
-      # - find . -name 'index.html' -exec sed -i 's/cdn.maptiks.com/cdn-dev.maptiks.com/g' {} +
+      - find . -name 'main-config.js' -exec sed -i 's/cdn.maptiks.com/cdn-dev.maptiks.com/g' {} +
       - aws s3 sync deploy/ s3://templates-dev.maptiks.com/Cascade/ --delete --quiet
       - >
         curl -X DELETE "https://api.cloudflare.com/client/v4/zones/34e8519f80106c3699e76002b4153ce5/purge_cache"
