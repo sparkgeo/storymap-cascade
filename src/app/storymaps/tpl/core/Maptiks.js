@@ -2,7 +2,7 @@ define(['dojo/topic'],
   function(topic) {
     require(['maptiks'], function(mapWrapper) {
       topic.subscribe('map-loaded', function(response) {
-        if (response.hasOwnProperty('map')) { // if the response is a map
+        if (response.hasOwnProperty('map')) { // if response is a map
           var appSettings = app.data.appItem.data.values.settings;
           var container = response.map.container; // the current map div
           var mapIndex = $('.map').index(container) + 1;
