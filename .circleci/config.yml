@@ -15,7 +15,7 @@ jobs:
           key: v1-npm-{{ checksum "package.json" }}
       - run:
           name: Install NPM Dependencies
-          command: ls node_modules || npm i && npm i grunt-cli
+          command: ls node_modules || (npm i && npm i grunt-cli)
       - save_cache:
           key: v1-npm-{{ checksum "package.json" }}
           paths:
